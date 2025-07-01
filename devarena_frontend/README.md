@@ -1,82 +1,160 @@
-# Lightweight React Template for KAVIA
+# DevArena Frontend
 
-This project provides a minimal React template with a clean, modern UI and minimal dependencies.
-
-## Features
-
-- **Lightweight**: No heavy UI frameworks - uses only vanilla CSS and React
-- **Modern UI**: Clean, responsive design with KAVIA brand styling
-- **Fast**: Minimal dependencies for quick loading times
-- **Simple**: Easy to understand and modify
+DevArena Frontend delivers an immersive, gamified React-based UI for code review, bug logging, rule mission control, and cosmic dashboards.
 
 ## Getting Started
 
-In the project directory, you can run:
+### Prerequisites
 
-### `npm start`
+- Node.js v18+
+- npm v9+ (comes with Node)
 
-Runs the app in development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Installation
 
-### `npm test`
+1. **Clone the repository**
+   ```bash
+   git clone <repo-url>
+   cd devarena_frontend
+   ```
 
-Launches the test runner in interactive watch mode.
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-### `npm run build`
+3. **Start the app (development)**
+   ```bash
+   npm start
+   ```
+   Access at [http://localhost:3000](http://localhost:3000)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+4. **Build for production**
+   ```bash
+   npm run build
+   ```
+
+5. **Run tests**
+   ```bash
+   npm test
+   ```
+
+> The app is designed for local proxy to backend APIs at `/api`.
+
+---
+
+## High-Level Architecture
+
+```mermaid
+graph TD
+    A[User Browser] --> B[DevArena React App]
+    B -- REST Calls --> C[DevArena Backend API]
+    subgraph UI Layout
+      B --> D[SideNav (3D Planets)]
+      B --> E[TopBar (Cosmic)]
+      B --> F[Starfield Widget]
+      B --> G[Main Content: GlassPanel]
+      G --> H(Pages)
+      H --> H1[Home]
+      H --> H2[Projects]
+      H --> H3[Leaderboard]
+      H --> H4[Redeem]
+      H --> H5[PR/Bug Board]
+      H --> H6[RuleManager]
+      H --> H7[DisputeCenter]
+      H --> H8[UserProfile]
+      B --> I[NotificationWidget]
+    end
+    C --/api/v1/*--> |APIs| Cx[Backend Routers]
+```
+
+- All data flows via central API utility (`src/api.js`)
+- App-wide state/context is managed by `DevArenaContext`
+- Theme/colors managed with `ThemeContext` and CSS variables
+
+---
+
+## Main Features
+
+- **Cosmic Dashboard UI**: Responsive, animated backgrounds, side navigation styled as planets, glassmorphic panels for all main content.
+- **Project & PR Review**: List projects and repositories, drag/drop bug and PR management, real-time feedback.
+- **Bug Logging & Resolution**: Submit, view, and promote bugs to PRs visually.
+- **Rules Mission Control**: (Planned) Manage/customize PR quality rules per project/org.
+- **Dispute Center**: (Planned) Submit and mediate code review or project conflicts.
+- **Leaderboard & Gamification**: XP rings, top contributors, level-up flares, badges.
+- **Redeem Center**: Earn and trade XP for rewards.
+- **Micro-Interactions**: Level-up, bug found, redeem toasts and banners.
+- **Theming**: Galactic, Nebula, High Contrast themes (customizable).
+
+---
+
+## Frontend Modules & Components
+
+- **`src/App.js`**: Application root, layout/orchestration, routing.
+- **`src/state/DevArenaContext.js`**: App-wide state (user, notifications, xp, micro-interactions).
+- **`src/api.js`**: Central REST API client (all backend interaction).
+- **`src/theme/ThemeContext.js`**: Dynamic/animated theme handling.
+- **`src/components/SideNav.js`**: 3D side navigation (planets).
+- **`src/components/TopBar.js`**: App bar, user highlights, theme toggle.
+- **`src/widgets/Starfield.js`**: Animated cosmic background layer.
+- **`src/widgets/NotificationWidget.js`**: Global notifications, event feedback.
+- **`src/pages/`**: Route-based content:
+  - `Home.js`: Splash + intro
+  - `Projects.js`: Projects/org catalog
+  - `Leaderboard.js`: Top XP/completionists
+  - `Redeem.js`: Reward claiming
+  - `PRBoard.js`: Pull requests & bug board
+  - `RuleManager.js`: (Planned) Rule management
+  - `DisputeCenter.js`: (Planned) Conflict mediation
+  - `UserProfile.js`: Avatar, stats, history
+
+---
+
+## Backend API Integration
+
+APIs are called via `src/api.js`. Example endpoints (see backend doc for full spec):
+
+- `/api/v1/auth/login`
+- `/api/v1/projects/`
+- `/api/v1/bugs/`
+- `/api/v1/disputes/`
+- `/api/v1/leaderboards/`
+- `/api/v1/gamification/*`
+- `/api/v1/rules/`
+- `/api/v1/redeem/*`
+- `/api/v1/notifications/`
+
+Use browser or network inspector to debug requests/responses. Backend URL defaults to `/api`.
+
+---
+
+## Running Tests
+
+Unit and integration tests should be placed in `src/` alongside components or in `__tests__` folders.
+
+### Recommended Test Coverage
+
+- **Component tests**: All interactive components and pages (rendering, user interaction, error states).
+- **API contract tests**: `src/api.js` functions, especially authentication, project, bug, and reward flows.
+- **Integration/E2E**: Simulate full user flows (login, bug log, PR promotion, XP updates).
+- **Accessibility**: ARIA labels, keyboard, and color contrast (especially for cosmic/dark themes).
+
+Use React Testing Library and Jest (preconfigured). Example:
+
+```bash
+npm test
+```
+
+_TODO: Add deeper test coverage for all feature modules, especially PR/bug board drag-drop and redeem logic._
+
+---
 
 ## Customization
 
-### Colors
+Colors and styles defined in `src/App.css` and `ThemeContext.js`; update or add new "themes" as needed.
 
-The main brand colors are defined as CSS variables in `src/App.css`:
+---
 
-```css
-:root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-}
-```
+## License
 
-### Components
+MIT or see repository.
 
-This template uses pure HTML/CSS components instead of a UI framework. You can find component styles in `src/App.css`. 
-
-Common components include:
-- Buttons (`.btn`, `.btn-large`)
-- Container (`.container`)
-- Navigation (`.navbar`)
-- Typography (`.title`, `.subtitle`, `.description`)
-
-## Learn More
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
