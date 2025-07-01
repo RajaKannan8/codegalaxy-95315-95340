@@ -4,9 +4,10 @@
 //
 const API_BASE = "/api"; // TODO: Replace with actual host (from .env/CI or relative proxy)
 
+// PUBLIC_INTERFACE
+// Central API utility for DevArena frontend – connects to backend REST endpoints.
 /** Standard API GET request */
 export async function apiGet(endpoint, token = null) {
-  // PUBLIC_INTERFACE
   const res = await fetch(API_BASE + endpoint, {
     headers: token ? { Authorization: `Bearer ${token}` } : {}
   });
@@ -16,7 +17,6 @@ export async function apiGet(endpoint, token = null) {
 
 /** Standard API POST */
 export async function apiPost(endpoint, body, token = null) {
-  // PUBLIC_INTERFACE
   const res = await fetch(API_BASE + endpoint, {
     method: "POST",
     headers: {
@@ -29,4 +29,43 @@ export async function apiPost(endpoint, body, token = null) {
   return await res.json();
 }
 
+// Export future REST endpoints when backend spec is available.
+export async function fetchProjects() {
+  return apiGet("/projects");
+}
+export async function fetchLeaderboard() {
+  return apiGet("/leaderboard");
+}
+export async function fetchUserProfile() {
+  return apiGet("/me");
+}
+export async function fetchPRs() {
+  return apiGet("/prs");
+}
+export async function fetchBugs(projectId = null) {
+  let url = "/bugs";
+  if (projectId) url += "?project_id=" + encodeURIComponent(projectId);
+  return apiGet(url);
+}
+export async function submitBug(data) {
+  return apiPost("/bugs", data);
+}
+export async function submitPR(data) {
+  return apiPost("/prs", data);
+}
+export async function redeemReward(rewardType) {
+  return apiPost("/rewards/redeem", { reward: rewardType });
+}
+export async function fetchRewards() {
+  return apiGet("/rewards");
+}
+export async function fetchRules(scope = "global") {
+  return apiGet("/rules?scope=" + encodeURIComponent(scope));
+}
+export async function fetchDisputes() {
+  return apiGet("/disputes");
+}
+export async function login(credentials) {
+  return apiPost("/auth/login", credentials);
+}
 // Export future REST endpoints when backend spec is available.
