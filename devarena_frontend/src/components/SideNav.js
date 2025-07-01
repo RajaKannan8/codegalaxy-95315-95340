@@ -20,6 +20,9 @@ function SideNav() {
         <NavLink to="/redeem" className="nav-planet" aria-label="Redeem">
           <span role="img" aria-label="star">🌟</span>
         </NavLink>
+        <NavLink to="/prboard" className="nav-planet" aria-label="PR Board">
+          <span role="img" aria-label="alien-code">👾</span>
+        </NavLink>
       </div>
     </nav>
   );
