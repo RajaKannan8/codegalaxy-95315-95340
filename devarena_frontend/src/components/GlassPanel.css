@@ -1,0 +1,20 @@
+.glass-panel {
+  margin: 2vw auto;
+  padding: 2.5vw 2vw;
+  max-width: 1100px;
+  min-height: 65vh;
+  background: rgba(255, 255, 255, 0.09);
+  border-radius: 1.6em;
+  box-shadow: 0 6px 36px 0 rgba(70, 80, 240, 0.14), 0 1.5px 10px rgba(90,70,255,0.10);
+  border: 2px solid var(--border-color, #40aaff);
+  backdrop-filter: blur(16px) saturate(176%);
+  -webkit-backdrop-filter: blur(16px) saturate(176%);
+  transition: background 0.4s;
+}
+
+@media (max-width: 900px) {
+  .glass-panel {
+    margin: 1vw;
+    padding: 6vw 3vw;
+  }
+}

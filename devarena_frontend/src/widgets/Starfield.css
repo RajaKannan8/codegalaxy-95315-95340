@@ -1,0 +1,24 @@
+.starfield-bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.star {
+  position: absolute;
+  width: 2.5px;
+  height: 2.5px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.75;
+  box-shadow: 0 0 6px #bdf, 0 0 12px #cdf;
+  animation: star-twinkle linear infinite;
+}
+@keyframes star-twinkle {
+  0%   { opacity: 0.85; }
+  50%  { opacity: 0.45; transform: scale(0.7);}
+  100% { opacity: 0.95; }
+}

@@ -29,6 +29,38 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Root cosmic dashboard layout */
+.root-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Side navigation layout */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Main content area for topbar/content/panels */
+.content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.5vh;
+  /* Responsive horizontal padding for content */
+  padding: 0 1vw;
+  z-index: 2;
+}
+
+@media (max-width: 900px) {
+  .root-layout { flex-direction: column; }
+  .main-content { padding-left: 0; }
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
